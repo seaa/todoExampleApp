@@ -1,0 +1,12 @@
+ul {
+  list-style: none;
+}
+
+.Item {
+  display: block;
+  margin-bottom: 10px;
+}
+
+.Item label > * {
+  margin-right: 10px;
+}
