@@ -37,9 +37,9 @@ class Signup extends Component {
 
     try {
       // await "holds" the execution until the async function completes
-      const loginResponse = await signup({ username: this.props.username, password: this.props.password });
-      if (loginResponse.username && loginResponse.token) {
-        this.props.userHasAuthenticated(true, loginResponse.username, loginResponse.token);
+      const signupResponse = await signup({ username: this.props.username, password: this.props.password });
+      if (signupResponse.username && signupResponse.token) {
+        this.props.userHasAuthenticated(true, signupResponse.username, signupResponse.token);
         this.props.history.push("/");
       }
     } catch (error) {
