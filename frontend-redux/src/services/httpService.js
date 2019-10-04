@@ -1,7 +1,10 @@
+import { store as mockStore } from './mockStore.js';
+
 // in the service we define a base method to request or post data via fetch
 // and then we can create custom functions for each use case that we need
 
 const server = 'http://localhost:8000/';
+const API = process.env.REACT_APP_API;
 
 const handleErrors = response => {
   if (!response.ok) {
@@ -25,9 +28,19 @@ async function httpRequest ({method, service, headers, payload}) {
     config.body = JSON.stringify(payload);
   }
 
-  return fetch(route, config)
-  .then(handleErrors)
-  .then(res => res.json());
+  if (API === 'mockstore') {
+    // use the mockStore as API
+    // we promisify the returned value to simulate a real response
+    // mockstore wont return errors, we could decide to reject here to simulate an API error
+    return new Promise((resolve, reject) => {
+      resolve (mockStore.exec({...config, service}));
+    })
+  } else {
+    // use actual API
+    return fetch(route, config)
+    .then(handleErrors)
+    .then(res => res.json());
+  }
 };
 
 async function login (data) {
